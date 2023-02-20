@@ -1,6 +1,5 @@
 package me.example.rabbitpractice.data.repository;
 
-import me.example.rabbitpractice.data.model.Dish;
 import me.example.rabbitpractice.data.model.Restaurant;
 import org.springframework.data.jpa.repository.JpaRepository;
 

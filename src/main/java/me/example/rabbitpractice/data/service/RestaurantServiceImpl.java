@@ -10,9 +10,10 @@ import java.util.List;
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
 
-    private RestaurantRepository repository;
+    private final RestaurantRepository repository;
 
     public RestaurantServiceImpl(RestaurantRepository repository) {
+        this.repository = repository;
     }
 
     @Override
