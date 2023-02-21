@@ -5,7 +5,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import me.example.rabbitpractice.data.model.Dish;
 import me.example.rabbitpractice.data.model.Restaurant;
+import me.example.rabbitpractice.data.service.MenuService;
 import me.example.rabbitpractice.data.service.RestaurantService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +22,11 @@ import java.util.List;
 public class MainController {
 
     private final RestaurantService restaurantService;
+    private final MenuService menuService;
 
-    public MainController(RestaurantService restaurantService) {
+    public MainController(RestaurantService restaurantService, MenuService menuService) {
         this.restaurantService = restaurantService;
+        this.menuService = menuService;
     }
 
     @GetMapping("/restaurants")
@@ -55,5 +59,15 @@ public class MainController {
     @GetMapping("/restaurants/{id}")
     public ResponseEntity<Restaurant> getRestaurantInfo(@PathVariable Long id) {
         return ResponseEntity.ok(restaurantService.getRestaurantById(id));
+    }
+
+    @Operation(summary = "Получить меню ресторана",
+            description = "Получить меню ресторана по id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Успешно")})
+    @GetMapping("/restaurants/{id}/menu")
+    public ResponseEntity<List<Dish>> getMenu(@PathVariable Long id) {
+        return ResponseEntity.ok(menuService.getMenu(id));
     }
 }
