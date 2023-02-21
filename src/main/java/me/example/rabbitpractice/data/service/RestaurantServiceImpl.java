@@ -2,7 +2,6 @@ package me.example.rabbitpractice.data.service;
 
 import me.example.rabbitpractice.data.model.Restaurant;
 import me.example.rabbitpractice.data.repository.RestaurantRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
