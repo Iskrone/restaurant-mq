@@ -6,14 +6,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import me.example.rabbitpractice.data.model.Dish;
+import me.example.rabbitpractice.data.model.Order;
+import me.example.rabbitpractice.data.model.OrderItem;
 import me.example.rabbitpractice.data.model.Restaurant;
 import me.example.rabbitpractice.data.service.MenuService;
+import me.example.rabbitpractice.data.service.OrderService;
 import me.example.rabbitpractice.data.service.RestaurantService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,10 +23,13 @@ public class MainController {
 
     private final RestaurantService restaurantService;
     private final MenuService menuService;
+    private final OrderService orderService;
 
-    public MainController(RestaurantService restaurantService, MenuService menuService) {
+    public MainController(RestaurantService restaurantService,
+                          MenuService menuService, OrderService orderService) {
         this.restaurantService = restaurantService;
         this.menuService = menuService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/restaurants")
@@ -61,13 +64,63 @@ public class MainController {
         return ResponseEntity.ok(restaurantService.getRestaurantById(id));
     }
 
-    @Operation(summary = "Получить меню ресторана",
-            description = "Получить меню ресторана по id")
+    @Operation(summary = "Get Restaurant Menu",
+            description = "Get Restaurant Menu by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Успешно")})
     @GetMapping("/restaurants/{id}/menu")
     public ResponseEntity<List<Dish>> getMenu(@PathVariable Long id) {
         return ResponseEntity.ok(menuService.getMenu(id));
+    }
+
+    @Operation(summary = "Get orders list by Restaurant",
+            description = "Get orders list by Restaurant")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Успешно")})
+    @GetMapping("/restaurants/{id}/orders")
+    public ResponseEntity<List<Order>> getOrdersForRestaurant(@PathVariable Long id) {
+        return ResponseEntity.ok(orderService.getOrdersByRestaurant(id));
+    }
+
+    @Operation(summary = "Create new order",
+            description = "Make new order")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Успешно")})
+    @PostMapping("/restaurants/{id}/orders")
+    public void createOrder(@PathVariable Long id, OrderDTO orderDTO) {
+
+    }
+
+    @Operation(summary = "Get All orders",
+            description = "Get All orders")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Успешно")})
+    @GetMapping("/orders")
+    public ResponseEntity<List<Order>> getOrders() {
+        return ResponseEntity.ok(orderService.getOrders());
+    }
+
+    @Operation(summary = "Get order info",
+            description = "Get order info")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Успешно")})
+    @GetMapping("/orders/{id}")
+    public ResponseEntity<Order> getOrder(@PathVariable Long id) {
+        return ResponseEntity.ok(orderService.getOrderById(id));
+    }
+
+    @Operation(summary = "Get dishes in order",
+            description = "Get dishes in order")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Успешно")})
+    @GetMapping("/orders/{id}/dishes")
+    public ResponseEntity<List<OrderItem>> getDishesInOrder(@PathVariable Long id) {
+        return ResponseEntity.ok(orderService.getDishesInOrder(id));
     }
 }
