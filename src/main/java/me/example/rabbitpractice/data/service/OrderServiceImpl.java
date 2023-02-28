@@ -43,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public Order createOrder(Long restaurantId, CreateOrderDTO orderDTO) {
         List<OrderItem> orderItems =
-                orderDTO.items().stream().map(dto -> OrderItem.builder()
+                orderDTO.getItems().stream().map(dto -> OrderItem.builder()
                         .dish(menuRepository.getReferenceById(dto.dishId()))
                         .build()).collect(Collectors.toList());
         Order order2save = Order.builder()
