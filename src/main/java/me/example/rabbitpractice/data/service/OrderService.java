@@ -2,7 +2,7 @@ package me.example.rabbitpractice.data.service;
 
 import me.example.rabbitpractice.data.model.Order;
 import me.example.rabbitpractice.data.model.OrderItem;
-import me.example.rabbitpractice.rest.OrderDTO;
+import me.example.rabbitpractice.rest.CreateOrderDTO;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface OrderService {
 
     List<OrderItem> getDishesInOrder(Long orderId);
 
-    void createOrder(OrderDTO orderDTO);
+    Order createOrder(Long restaurantId, CreateOrderDTO orderDTO);
 
     List<Order> getOrdersByRestaurant(Long restaurantId);
 }

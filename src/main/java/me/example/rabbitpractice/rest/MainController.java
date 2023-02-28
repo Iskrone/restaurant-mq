@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import me.example.rabbitpractice.data.model.Dish;
 import me.example.rabbitpractice.data.model.Order;
 import me.example.rabbitpractice.data.model.OrderItem;
@@ -19,18 +21,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rp")
+@Tag(name = "Main controller", description = "All the operations")
+@AllArgsConstructor
 public class MainController {
 
     private final RestaurantService restaurantService;
     private final MenuService menuService;
     private final OrderService orderService;
-
-    public MainController(RestaurantService restaurantService,
-                          MenuService menuService, OrderService orderService) {
-        this.restaurantService = restaurantService;
-        this.menuService = menuService;
-        this.orderService = orderService;
-    }
 
     @GetMapping("/restaurants")
     @Operation(summary = "Получить список ресторанов",
@@ -90,8 +87,8 @@ public class MainController {
             @ApiResponse(responseCode = "200",
                     description = "Успешно")})
     @PostMapping("/restaurants/{id}/orders")
-    public void createOrder(@PathVariable Long id, OrderDTO orderDTO) {
-
+    public ResponseEntity<Order> createOrder(@PathVariable Long id, @RequestBody CreateOrderDTO orderDTO) {
+        return ResponseEntity.ok(orderService.createOrder(id, orderDTO));
     }
 
     @Operation(summary = "Get All orders",

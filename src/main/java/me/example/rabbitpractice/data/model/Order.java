@@ -1,8 +1,7 @@
 package me.example.rabbitpractice.data.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Singular;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -11,6 +10,9 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "ORDERS")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Order {
 
     @Id
@@ -27,7 +29,7 @@ public class Order {
     private List<OrderItem> items;
 
     @ManyToOne
-    @JoinColumn(name="restaurant_id", nullable=false)
+    @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
 }

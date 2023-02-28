@@ -1,5 +1,6 @@
 package me.example.rabbitpractice.data.service;
 
+import lombok.AllArgsConstructor;
 import me.example.rabbitpractice.data.model.Restaurant;
 import me.example.rabbitpractice.data.repository.RestaurantRepository;
 import org.springframework.stereotype.Service;
@@ -7,13 +8,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class RestaurantServiceImpl implements RestaurantService {
 
     private final RestaurantRepository repository;
-
-    public RestaurantServiceImpl(RestaurantRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public List<Restaurant> getRestaurants() {
