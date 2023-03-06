@@ -9,6 +9,7 @@ import me.example.rabbitpractice.data.model.Restaurant;
 import me.example.rabbitpractice.data.service.MenuService;
 import me.example.rabbitpractice.data.service.OrderService;
 import me.example.rabbitpractice.data.service.RestaurantService;
+import me.example.rabbitpractice.rabbit.RabbitService;
 import me.example.rabbitpractice.rest.CreateOrderDTO;
 import me.example.rabbitpractice.rest.MainController;
 import me.example.rabbitpractice.rest.OrderItemDTO;
@@ -50,6 +51,9 @@ public class MainControllerTest {
     @MockBean
     OrderService orderService;
 
+    @MockBean
+    RabbitService rabbitService;
+
     @Test
     public void getAllRestaurantsTest() throws Exception {
         Restaurant restaurant1 = new Restaurant(1L, "Ромашка", "Улица Пушкина");
@@ -63,8 +67,8 @@ public class MainControllerTest {
                         .get("/rp/restaurants")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(3)));
-//                .andExpect(jsonPath("$[2].name", is("Jane Doe")));
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[1].name", is("Клевер")));
     }
 
     @Test
