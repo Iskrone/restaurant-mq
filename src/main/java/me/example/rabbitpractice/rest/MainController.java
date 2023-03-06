@@ -1,5 +1,6 @@
 package me.example.rabbitpractice.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,6 +15,7 @@ import me.example.rabbitpractice.data.model.Restaurant;
 import me.example.rabbitpractice.data.service.MenuService;
 import me.example.rabbitpractice.data.service.OrderService;
 import me.example.rabbitpractice.data.service.RestaurantService;
+import me.example.rabbitpractice.rabbit.RabbitService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +30,7 @@ public class MainController {
     private final RestaurantService restaurantService;
     private final MenuService menuService;
     private final OrderService orderService;
+    private final RabbitService rabbitService;
 
     @GetMapping("/restaurants")
     @Operation(summary = "Получить список ресторанов",
@@ -89,6 +92,18 @@ public class MainController {
     @PostMapping("/restaurants/{id}/orders")
     public ResponseEntity<Order> createOrder(@PathVariable Long id, @RequestBody CreateOrderDTO orderDTO) {
         return ResponseEntity.ok(orderService.createOrder(id, orderDTO));
+    }
+
+    @Operation(summary = "Create new order with MQ",
+            description = "Make new order with MQ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Успешно")})
+    @PostMapping("/restaurants/{id}/orders/later")
+    public ResponseEntity createOrderLater(@PathVariable Long id,
+                                           @RequestBody CreateOrderDTO orderDTO) throws JsonProcessingException {
+        rabbitService.createOrderLater(id, orderDTO);
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Get All orders",
