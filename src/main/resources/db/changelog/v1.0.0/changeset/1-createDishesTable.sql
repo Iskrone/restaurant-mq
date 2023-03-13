@@ -1,10 +1,11 @@
+CREATE SEQUENCE IF NOT EXISTS DISH_ID_SEQUENCE START WITH 1 INCREMENT BY 1;
+
 CREATE TABLE DISHES
 (
-    ID            bigint    not null,
+    ID            bigint    not null DEFAULT NEXT VALUE FOR DISH_ID_SEQUENCE PRIMARY KEY,
     DESCRIPTION   varchar(255),
     NAME          varchar(255),
     PRICE         float(53) not null,
     RESTAURANT_ID bigint    not null,
-    primary key (ID),
     CONSTRAINT DISH_RESTAURANT_FK FOREIGN KEY (RESTAURANT_ID) REFERENCES RESTAURANTS (ID) ON DELETE CASCADE ON UPDATE CASCADE
 );

@@ -1,6 +1,7 @@
 package me.example.rabbitpractice.data.service;
 
 import lombok.AllArgsConstructor;
+import me.example.rabbitpractice.data.model.Dish;
 import me.example.rabbitpractice.data.model.Order;
 import me.example.rabbitpractice.data.model.OrderItem;
 import me.example.rabbitpractice.data.repository.MenuRepository;
@@ -35,8 +36,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderItem> getDishesInOrder(Long orderId) {
-        return repository.getReferenceById(orderId).getItems();
+    @Transactional
+    public List<Dish> getDishesInOrder(Long orderId) {
+        List<OrderItem> orderItems = getOrderById(orderId).getItems();
+        return orderItems.stream().map(OrderItem::getDish).toList();
     }
 
     @Override

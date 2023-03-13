@@ -1,7 +1,8 @@
+CREATE SEQUENCE IF NOT EXISTS RESTAURANTS_ID_SEQUENCE START WITH 1 INCREMENT BY 1;
+
 CREATE TABLE RESTAURANTS
 (
-    ID      bigint not null,
+    ID      bigint not null DEFAULT NEXT VALUE FOR RESTAURANTS_ID_SEQUENCE PRIMARY KEY,
     ADDRESS varchar(255),
-    NAME    varchar(255),
-    primary key (ID)
+    NAME    varchar(255)
 );

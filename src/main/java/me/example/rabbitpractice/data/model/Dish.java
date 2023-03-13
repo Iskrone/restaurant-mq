@@ -14,8 +14,11 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Dish {
 
+    private static final String ID_SEQ_NAME = "DISH_ID_SEQUENCE";
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = ID_SEQ_NAME)
+    @SequenceGenerator(name = ID_SEQ_NAME, sequenceName = ID_SEQ_NAME, allocationSize = 1)
     private Long id;
 
     private String name;

@@ -14,8 +14,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OrderItem {
 
+    private static final String ID_SEQ_NAME = "ORDER_ITEM_ID_SEQUENCE";
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = ID_SEQ_NAME)
+    @SequenceGenerator(name = ID_SEQ_NAME, sequenceName = ID_SEQ_NAME, allocationSize = 1)
     private Long id;
 
     @OneToOne
