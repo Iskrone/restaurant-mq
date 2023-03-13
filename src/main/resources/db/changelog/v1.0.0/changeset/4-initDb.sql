@@ -1,7 +1,7 @@
-INSERT INTO RESTAURANTS (ID, NAME, ADDRESS)
-VALUES (1, 'Ромашка', 'Улица Пушкина');
-INSERT INTO RESTAURANTS (ID, NAME, ADDRESS)
-VALUES (2, 'Клевер', 'Улица Лермонтова');
+INSERT INTO RESTAURANTS (NAME, ADDRESS)
+VALUES ('Ромашка', 'Улица Пушкина');
+INSERT INTO RESTAURANTS (NAME, ADDRESS)
+VALUES ('Клевер', 'Улица Лермонтова');
 
 INSERT INTO DISHES (ID, NAME, DESCRIPTION, PRICE, RESTAURANT_ID)
 VALUES (1, 'Булка', 'Вкусная', 15, 1);

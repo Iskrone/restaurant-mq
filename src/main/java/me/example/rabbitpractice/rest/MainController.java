@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import me.example.rabbitpractice.data.model.Dish;
 import me.example.rabbitpractice.data.model.Order;
-import me.example.rabbitpractice.data.model.OrderItem;
 import me.example.rabbitpractice.data.model.Restaurant;
 import me.example.rabbitpractice.data.service.MenuService;
 import me.example.rabbitpractice.data.service.OrderService;
@@ -132,7 +131,7 @@ public class MainController {
             @ApiResponse(responseCode = "200",
                     description = "Успешно")})
     @GetMapping("/orders/{id}/dishes")
-    public ResponseEntity<List<OrderItem>> getDishesInOrder(@PathVariable Long id) {
+    public ResponseEntity<List<Dish>> getDishesInOrder(@PathVariable Long id) {
         return ResponseEntity.ok(orderService.getDishesInOrder(id));
     }
 }
