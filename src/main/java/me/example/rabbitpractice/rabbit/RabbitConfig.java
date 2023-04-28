@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * Rabbit MQ Settings
  * @author Iskander on 02.03.2023
  */
 @Configuration
